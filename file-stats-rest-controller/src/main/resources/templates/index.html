@@ -1,0 +1,98 @@
+<! DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>File Statistics</title>
+	</head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<body>
+		<div id="myDiv">
+ 			Add Directory Path: <br><br>
+  			<input type="text" id="input_path"><br><br>
+  			<button type="button" onclick='addPath()' >Add Path</button>
+  			<button type="button" onclick='showFiles()' >View Files</button>
+  			<button type="button" onclick='showAllPaths()' >View Folders</button>
+		</div>
+				
+		<div id="folders">
+		</div>
+		
+		<table id='table tbody'>
+		<br>
+		</table>
+		
+	</body>	
+	<script>
+
+		function filesInThisFolder(){
+			var requestFiles= new XMLHttpRequest();
+			requestFiles.onreadystatechange= responseFiles;
+			var path= document.getElementById("input_path").value;
+			var res= path.replace(/\\/g,"/");
+			requestFiles.open("GET","/filesInThisFolder?folder_name="+res,true);
+			requestFiles.send();
+		}
+		function responseFiles(){
+			if(this.readyState == 4 && this.status == 200){
+				//document.getElementById("folders").innerHTML= this.responseText;
+				var json = this.responseText;
+				var data = JSON.parse(json);
+				for(var ij in data) {
+					document.getElementById("table tbody").innerHTML=document.getElementById("table tbody").innerHTML+"<tr><td>"+data[ij]._file_name+"</td></tr>";
+				}
+			}
+		}
+		
+		
+
+		function addPath(){
+			var show= new XMLHttpRequest();
+			show.onreadystatechange= resp;
+			var path_= document.getElementById("input_path").value;
+			var res_= path_.replace(/\\/g,"/");
+			show.open("GET","/addPath?path="+res_,true);
+			show.send();
+		}
+		function resp(){
+			if(this.readyState == 4 && this.status == 200){
+				alert("New Path added")
+			}
+		}
+		
+		function showAllPaths(){
+			var folderRequest= new XMLHttpRequest();
+			folderRequest.onreadystatechange= folderResponse;
+			folderRequest.open("GET","/allFolders",true);
+			folderRequest.send();
+		}
+		function folderResponse(){
+			if(this.readyState == 4 && this.status == 200){
+				if(jQuery.isEmptyObject(this.responseText))
+					alert("No Folders to show");
+				else{
+					var json = this.responseText;
+					var data = JSON.parse(json);
+					alert(typeof(data[0]));
+					document.getElementById("folders").innerHTML= "<a href=\"#\" onclick='showFilesInThisFolder(\""+data[0]+"\")'>"+ data[0] +"</a>";
+				}
+			}
+		}
+
+		function showFilesInThisFolder(data){
+			var xhttp= new XMLHttpRequest();
+			xhttp.onreadystatechange= xresp;
+			xhttp.open("GET","/filesInThisFolder?folder_name="+data,true);
+			xhttp.send();
+		}
+		function xresp(){
+			if(this.readyState == 4 && this.status == 200){
+				//document.getElementById("folders").innerHTML= this.responseText;
+				var json = this.responseText;
+				var data = JSON.parse(json);
+				for(var ij in data) {
+					document.getElementById("table tbody").innerHTML=document.getElementById("table tbody").innerHTML+"<tr><td>"+data[ij]._file_name+"</td></tr>";
+				}
+			}
+			
+		}
+	</script>
+</html>
