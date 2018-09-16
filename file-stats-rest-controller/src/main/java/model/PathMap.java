@@ -15,16 +15,16 @@ import controller.ControllerForFileStats;
 public class PathMap {
 
 	private static final char DOT = '.';
-	private static final String UNIX_PATH_SEPARATOR = "//";
-	private static final String PATH_SEPARATOR = "\\";
+//	private static final String UNIX_PATH_SEPARATOR = "//";
+//	private static final String PATH_SEPARATOR = "\\";
 	public final static Logger logger = Logger.getLogger(PathMap.class);
 	public String path_string;
 	public FileStatistics fileStatistics;
 	public ArrayList<DirectoryFile> files = new ArrayList<DirectoryFile>();
 	public HashMap<String, ArrayList<DirectoryFile>> directoryHierarchy = new HashMap<String, ArrayList<DirectoryFile>>();
-	public String indexFilePath = "C:" + PATH_SEPARATOR + "Users" + PATH_SEPARATOR + "mayank.patel" + PATH_SEPARATOR
-			+ "Desktop" + PATH_SEPARATOR + "Java Projects" + PATH_SEPARATOR + "Assignment_2" + PATH_SEPARATOR
-			+ "file-stats-rest-controller" + PATH_SEPARATOR + "Index";
+	public String indexFilePath = "C:" + File.separator + "Users" + File.separator + "mayank.patel" + File.separator
+			+ "Desktop" + File.separator + "Java Projects" + File.separator + "Assignment_2" + File.separator
+			+ "file-stats-rest-controller" + File.separator + "Index";
 	private ControllerForFileStats controllerForFileStats = new ControllerForFileStats();
 
 	/**
@@ -64,7 +64,7 @@ public class PathMap {
 	 */
 	public void dumpInFile() {
 		try {
-			File file = new File(Paths.get("").toAbsolutePath().toString() + PATH_SEPARATOR + "index.ser");
+			File file = new File(Paths.get("").toAbsolutePath().toString() + File.separator + "index.ser");
 
 			FileOutputStream fos = new FileOutputStream(file);
 
@@ -206,7 +206,7 @@ public class PathMap {
 		String currentDirectory = path.substring(0, path.indexOf(name) - 1);
 
 		// sending the watched event processed to frontend through we socket
-		sendWatcherEventUpdate(currentDirectory.substring(currentDirectory.lastIndexOf(PATH_SEPARATOR) + 1),
+		sendWatcherEventUpdate(currentDirectory.substring(currentDirectory.lastIndexOf(File.separator) + 1),
 				currentDirectory);
 
 	}
@@ -224,7 +224,7 @@ public class PathMap {
 			if (f.get_type().equals("Folder")) {
 				String newPath = path.substring(0, path.indexOf(name) - 1);
 				deleteFolder(directoryHierarchy.get(extractNameFromPath(newPath)), newPath,
-						newPath.substring(newPath.lastIndexOf(UNIX_PATH_SEPARATOR) + 1));
+						newPath.substring(newPath.lastIndexOf(File.separator) + 1));
 			}
 		}
 		logger.info("Folder deleted from map, path: " + path);
@@ -238,8 +238,8 @@ public class PathMap {
 	 */
 	public String extractNameFromPath(String path) {
 
-		if (path.contains(PATH_SEPARATOR)) {
-			String res = path.substring(path.lastIndexOf(PATH_SEPARATOR) + 1);
+		if (path.contains(File.separator)) {
+			String res = path.substring(path.lastIndexOf(File.separator) + 1);
 			return res;
 		} else {
 			return path;

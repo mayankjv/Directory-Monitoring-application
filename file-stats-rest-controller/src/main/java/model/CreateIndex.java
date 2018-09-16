@@ -15,7 +15,7 @@ import controller.ControllerForFileStats;
 public class CreateIndex {
 
 	public final static Logger logger = Logger.getLogger(CreateIndex.class);
-	private static final String PATH_SEPARATOR = "\\";
+//	private static final String PATH_SEPARATOR = "\\";
 	private PathMap pathMap;
 	private FileStatistics fileStatistics;
 	private ControllerForFileStats controllerForFileStats = new ControllerForFileStats();
@@ -109,7 +109,7 @@ public class CreateIndex {
 						fileStatistics.pathStringMap.put(path, pathMap);
 					}
 
-					String new_key = path + PATH_SEPARATOR + file.getName();
+					String new_key = path + File.separator + file.getName();
 					if (!pathMap.directoryHierarchy.containsKey(extractNameFromPath(new_key))) {
 						pathMap.directoryHierarchy.put(extractNameFromPath(new_key), new ArrayList<DirectoryFile>());
 						if (!fileStatistics.pathStringMap.containsKey(new_key)) {
@@ -147,8 +147,8 @@ public class CreateIndex {
 	 */
 	public String extractNameFromPath(String path) {
 
-		if (path.contains(PATH_SEPARATOR)) {
-			String res = path.substring(path.lastIndexOf(PATH_SEPARATOR) + 1);
+		if (path.contains(File.separator)) {
+			String res = path.substring(path.lastIndexOf(File.separator) + 1);
 			return res;
 		} else {
 			return path;

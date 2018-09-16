@@ -4,7 +4,7 @@ var currFolderName = "";
 var pieChartConfig;
 var wordCloudConfig;
 var fileInModal = "";
-
+var folder = "";
 /**
  * This function requests the search results from the server based on the query
  * entered by the user.
@@ -386,6 +386,7 @@ function addPath() {
  */
 function resp() {
 	if (this.readyState == 4 && this.status == 200) {
+		console.log("resp");
 		if (jQuery.isEmptyObject(this.responseText)) {
 			var alert = document.getElementById("alert-failure");
 			alert.style.display = "block";
@@ -467,6 +468,38 @@ function folderResponse() {
 			}
 		}
 	}
+}
+
+function browse() {
+
+	// document.getElementById("table-body").style.display = 'none';
+	// document.getElementById("table-head").style.display = 'none';
+	// document.getElementById("back-btn").style.display = 'none';
+	var folderRequest = new XMLHttpRequest();
+	folderRequest.onreadystatechange = browseResponse;
+	folderRequest.open("GET", "/browse", true);
+	folderRequest.send();
+}
+
+function browseResponse() {
+	if (this.readyState == 4 && this.status == 200) {
+		var json = this.responseText;
+		console.log(json);
+		json = JSON.parse(json);
+		console.log(json);
+		document.getElementById("selectable").innerHTML = "";
+		for (i in json) {
+			document.getElementById("selectable").innerHTML = document
+					.getElementById("selectable").innerHTML
+					+ " <li class=\"ui-state-default\" ondblclick=\"openFolder()\">"
+					+ json[i] + "</li>"
+		}
+	}
+
+}
+
+function print() {
+	console.log($("#selectable").val());
 }
 
 /**
@@ -711,7 +744,6 @@ function showFilesInThisSubFolder(data) {
  * @returns
  */
 function getTokensForThisFile(fileName) {
-	document.getElementById("modal-table").innerHTML = "";
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = tokenResponse;
 	xhttp.open("GET", "/tokensForAFile?fileName=" + encodeURI(fileName), true);
@@ -727,11 +759,15 @@ function getTokensForThisFile(fileName) {
 function tokenResponse() {
 	if (this.readyState == 4 && this.status == 200) {
 		var json = this.responseText;
+		console.log(json);
 		var data_ = JSON.parse(json);
-		data_ = JSON.parse(data_);
+		console.log(data_)
+		data_ = JSON.parse(data_.toString());
+		console.log(data_)
 		var jsonSeries = [];
 		var jsonSerieswc = [];
-		document.getElementById("modal-table").innerHTML = "<thead class=\"thead-dark\"><tr><th>Token</th><th>Count</th><th>Frequency %</th></tr></thead>";
+		document.getElementById("modal-table-head").innerHTML = "";
+		document.getElementById("modal-table-head").innerHTML = "<tr><th>Token</th><th>Count</th><th>Frequency %</th></tr>";
 		var data = data_.tokens;
 		for (i in data) {
 			var js1 = "{\"text\": \"" + data[i].token + "\" , \"count\": \""
@@ -744,15 +780,18 @@ function tokenResponse() {
 			jsonSerieswc.push(js1);
 			jsonSeries.push(js);
 			var freq = (data[i].count * 100) / data_.total;
-			document.getElementById("modal-table").innerHTML = document
-					.getElementById("modal-table").innerHTML
+			document.getElementById("modal-table-body").innerHTML = document
+					.getElementById("modal-table-body").innerHTML
 					+ "<tr><td>"
 					+ data[i].token
 					+ "</td><td>"
 					+ data[i].count
 					+ "</td><td>" + freq + "</td></tr>";
 		}
-
+		// document.getElementById("modal-table").innerHTML = document
+		// .getElementById("modal-table").innerHTML
+		// + "</tbody";
+		console.log("tbody close");
 		wordCloudConfig = {
 			type : 'wordcloud',
 			"options" : {
@@ -997,3 +1036,52 @@ $(".dropdown-menu li a").click(
 					.val($(this).data('value'));
 
 		});
+
+function openFolder() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = openResponse;
+	console.log(folder);
+	xhttp.open("GET", "/open?name=" + folder, true);
+	xhttp.send();
+}
+function openResponse() {
+	if (this.readyState == 4 && this.status == 200) {
+		console.log(this.responseText.length);
+		if ((this.responseText.length == 0)) {
+			var alert = document.getElementById("alert-failure-browse");
+			alert.style.display = "block";
+			alert.innerHTML = "Already in the root directory !";
+			setTimeout(function() {
+				alert.style.display = "none";
+			}, 1500);
+
+		}
+		var json = this.responseText;
+		console.log(json);
+		json = JSON.parse(json);
+		console.log(json);
+		document.getElementById("selectable").innerHTML = "";
+		for (i in json) {
+			document.getElementById("selectable").innerHTML = document
+					.getElementById("selectable").innerHTML
+					+ " <li class=\"ui-state-default\" ondblclick=\"openFolder()\" >"
+					+ json[i] + "</li>"
+		}
+	}
+
+}
+
+function addFolder() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = resp;
+	xhttp.open("GET", "/addFolder?name=" + folder, true);
+	xhttp.send();
+}
+
+function backFolder() {
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = openResponse;
+	xhttp.open("GET", "/back", true);
+	xhttp.send();
+
+}

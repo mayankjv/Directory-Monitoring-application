@@ -27,8 +27,6 @@ import org.apache.log4j.Logger;
  */
 public class WatchThread extends Thread {
 
-	private static final String PATH_SEPARATOR = "\\";
-
 	public final static Logger logger = Logger.getLogger(WatchThread.class);
 	private WatchService watchService;
 	private HashMap<Path, WatchKey> map;
@@ -47,6 +45,7 @@ public class WatchThread extends Thread {
 		this.fileStatistics = fileStatistics;
 
 	}
+
 	public void registerNewPath(String path) {
 
 		File directory = new File(path);
@@ -68,7 +67,7 @@ public class WatchThread extends Thread {
 			// with the watchService
 			if (file.isDirectory()) {
 				try {
-					String new_path = path + PATH_SEPARATOR + file.getName();
+					String new_path = path + File.separator + file.getName();
 					Path _directoryToWatch = Paths.get(new_path);
 					registerDirectory(_directoryToWatch);
 				} catch (IOException e) {
@@ -77,9 +76,10 @@ public class WatchThread extends Thread {
 			}
 		}
 
-		System.out.println("New Path Registered: "+path);
-		
+		System.out.println("New Path Registered: " + path);
+
 	}
+
 	/**
 	 * Run method of the thread that will be executed in parallel with the main
 	 * thread
@@ -104,7 +104,7 @@ public class WatchThread extends Thread {
 				// with the watchService
 				if (file.isDirectory()) {
 					try {
-						String new_path = path + PATH_SEPARATOR + file.getName();
+						String new_path = path + File.separator + file.getName();
 						Path _directoryToWatch = Paths.get(new_path);
 						registerDirectory(_directoryToWatch);
 					} catch (IOException e) {
@@ -169,8 +169,8 @@ public class WatchThread extends Thread {
 						String path_to_be_passed = dir.resolve((Path) event.context()).toString();
 						fileStatistics.updateHashMap(fileName, path_to_be_passed, 2);
 						System.out.println("updateHashMap called for modification event");
-						System.out.println("File Name: "+fileName);
-						System.out.println("Path: "+path_to_be_passed);
+						System.out.println("File Name: " + fileName);
+						System.out.println("Path: " + path_to_be_passed);
 					}
 
 				}

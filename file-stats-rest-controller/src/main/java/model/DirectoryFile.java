@@ -248,9 +248,12 @@ public class DirectoryFile implements Serializable {
 			}
 			try {
 				temp = reader.readLine();
-				StringTokenizer st = new StringTokenizer(temp, "://,. -!*<>?\"\\~`^*");
-				while (st.hasMoreTokens())
-					tokensInOneLine.add(st.nextToken());
+				StringTokenizer st = new StringTokenizer(temp, ":/,. -!*<>?\"~`^*{}[];()@=+\\");
+				while (st.hasMoreTokens()) {
+					String tk = st.nextToken();
+					tokensInOneLine.add(tk.trim());
+					System.out.println(tk);
+				}
 				words += tokensInOneLine.size();
 				for (String word : tokensInOneLine) {
 					if (this.stopwords.contains(word))

@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
 @Service
 public class FileStatistics {
 
-	private static final String PATH_SEPARATOR = "\\";
+//	private static final String PATH_SEPARATOR = "\\";
 	public final static Logger logger = Logger.getLogger(FileStatistics.class);
 	private HashSet<String> allPaths;
 	private HashMap<String, PathMap> path;
@@ -191,8 +191,8 @@ public class FileStatistics {
 	 */
 	public String extractNameFromPath(String path) {
 
-		if (path.contains(PATH_SEPARATOR)) {
-			String res = path.substring(path.lastIndexOf(PATH_SEPARATOR) + 1);
+		if (path.contains(File.separator)) {
+			String res = path.substring(path.lastIndexOf(File.separator) + 1);
 			return res;
 		} else {
 			return path;

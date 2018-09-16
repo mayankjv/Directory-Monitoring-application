@@ -35,13 +35,11 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class ControllerForFileStats {
 
-	private static final char PATH_SEPARATOR = '\\';
-	private static final String FORWARD_SLASH = "/";
-	private static final String STRING_PATH_SEPARATOR = "\\\\";
 	private static final String NO_FOLDER_FOUND = "404";
 	private static final String DIRECTORY_ALREADY_PRESENT = "100";
 	public static HashSet<String> stopwords = new HashSet<String>(
-			Arrays.asList("a", "an", "the", "of", "on", "as", "at", "by", "you", "these", "this", "that"));;
+			Arrays.asList("a", "an", "the", "of", "on", "as", "at", "by", "you", "these", "this", "that"));
+	private Stack<String> lastPath = new Stack<>();
 
 	@Autowired
 	SimpMessagingTemplate socketResponse;
@@ -67,7 +65,7 @@ public class ControllerForFileStats {
 		allFolders = new HashSet<String>();
 		noOfPaths = 0;
 		watcherThread = new WatchThread();
-
+		lastPath.add(File.separator);
 	}
 
 	/**
@@ -102,7 +100,7 @@ public class ControllerForFileStats {
 		logger.info("Request Recieved to add path: " + path);
 
 		// return error message if the path has already been indexed
-		if (allFolders.contains(path.substring(path.lastIndexOf(PATH_SEPARATOR) + 1))) {
+		if (allFolders.contains(path.substring(path.lastIndexOf(File.separator) + 1))) {
 			Set<String> alreadyPresent = new HashSet<>();
 			alreadyPresent.add(DIRECTORY_ALREADY_PRESENT);
 			return alreadyPresent;
@@ -115,7 +113,6 @@ public class ControllerForFileStats {
 		if (!testIfFileExists.exists()) {
 			return null;
 		}
-		path = path.replace(FORWARD_SLASH, STRING_PATH_SEPARATOR);
 
 		PathMap pathMap = new PathMap(path, fileStatistics, this);
 
@@ -204,6 +201,70 @@ public class ControllerForFileStats {
 		}
 	}
 
+	@RequestMapping("/browse")
+	public Set<String> browse() {
+		File file = new File(lastPath.peek());
+		File[] listFiles = file.listFiles();
+		Set<String> files = new HashSet<>();
+		for (File fil : listFiles) {
+			if (fil.isDirectory())
+				files.add(fil.getName());
+		}
+		return files;
+
+	}
+
+	@RequestMapping("/open")
+	public Set<String> open(@RequestParam(value = "name") String name) {
+		File file = new File(lastPath.peek());
+		File[] listFiles = file.listFiles();
+		for (File fil : listFiles) {
+			if (fil.getName().equals(name)) {
+				lastPath.push(fil.getAbsolutePath());
+				File f = new File(lastPath.peek());
+				File[] list = f.listFiles();
+				Set<String> files = new HashSet<>();
+				for (File fil_ : list) {
+					if (fil_.isDirectory())
+						files.add(fil_.getName());
+				}
+				return files;
+			}
+		}
+		return null;
+	}
+
+	@RequestMapping("/back")
+	public Set<String> back() {
+		if (lastPath.size() == 1)
+			return null;
+		lastPath.pop();
+		File file = new File(lastPath.peek());
+		File[] listFiles = file.listFiles();
+		Set<String> files = new HashSet<>();
+		for (File fil : listFiles) {
+			if (fil.isDirectory()) {
+				files.add(fil.getName());
+			}
+		}
+		return files;
+	}
+
+	@RequestMapping("/addFolder")
+	public Set<String> addFolder(@RequestParam(value = "name") String name) {
+		File file = new File(lastPath.peek());
+		File[] listFiles = file.listFiles();
+		for (File fil : listFiles) {
+			if (fil.getName().equals(name)) {
+				Set<String> listOfFolders = addAPath(fil.getAbsolutePath());
+				lastPath = new Stack<>();
+				lastPath.push(File.separator);
+				return listOfFolders;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * this function returns all the tokens of a given file on user request
 	 * 
@@ -229,9 +290,7 @@ public class ControllerForFileStats {
 					+ result.get(token) + "},";
 			i++;
 		}
-		System.out.println(jsonString + "\n\n");
 		jsonString = jsonString.substring(0, jsonString.length() - 1) + "} , ";
-		System.out.println(jsonString + "\n\n");
 		jsonString = jsonString + "\"total\":" + total_tokens;
 		jsonString = jsonString + "}";
 		return g.toJson(jsonString);
@@ -246,8 +305,8 @@ public class ControllerForFileStats {
 	 */
 	public String extractNameFromPath(String path) {
 
-		if (path.contains("\\")) {
-			String res = path.substring(path.lastIndexOf("\\") + 1);
+		if (path.contains(File.separator)) {
+			String res = path.substring(path.lastIndexOf(File.separator) + 1);
 			return res;
 		} else {
 			return path;
@@ -343,7 +402,6 @@ public class ControllerForFileStats {
 	 */
 	@RequestMapping("/folderSummary")
 	public String getFolderSummary(@RequestParam(value = "path") String path) {
-		System.out.println("Path : " + path);
 		Path path_ = Paths.get(path);
 		FolderSummary folderSummary = new FolderSummary();
 		try {
@@ -394,7 +452,6 @@ class FolderSummary implements FileVisitor<Object> {
 
 	@Override
 	public FileVisitResult visitFile(Object file, BasicFileAttributes attrs) throws IOException {
-		System.out.println("Visit file !");
 		totalFiles++;
 		Path path = (Path) file;
 		File file_ = path.toFile();

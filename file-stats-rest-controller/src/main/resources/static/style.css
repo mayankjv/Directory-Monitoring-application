@@ -39,6 +39,9 @@ li
 
 
 
+
+
+
  
 
 
@@ -55,7 +58,16 @@ li
 
 
 
+
+
+
 a
+
+
+
+
+
+
 
 
 
@@ -117,6 +129,12 @@ a
 
 
 
+
+
+
+
+
+
 :not
 
 
@@ -133,7 +151,13 @@ a
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -166,7 +190,13 @@ a
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -215,7 +245,16 @@ background-color
 
 
 
+
+
+
+
+
+
 :
+
+
+
 
 
 
@@ -242,7 +281,16 @@ background-color
 
 
 
+
+
+
 #111
+
+
+
+
+
+
 
 
 
@@ -256,12 +304,14 @@ background-color
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
 	width: 100%;
+	table-layout: fixed;
 }
 
 .tableinner {
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
 	width: 100%;
+	table-layout: fixed;
 }
 
 td, th {
@@ -320,15 +370,60 @@ tr td:hover {
 #table-body {
 	word-wrap: break-word;
 }
+
 #pie-chart-div-license-text {
-  display: none !important;
-}
-#word-cloud-div-license-text{
 	display: none !important;
 }
-#pie-chart-div{
-	width= 100 px;
+
+#word-cloud-div-license-text {
+	display: none !important;
 }
-#word-cloud-div{
-	width = 100%;
+
+#pie-chart-div {
+	width: 450px;
+}
+
+#word-cloud-div {
+	width: 450px;
+}
+
+#modal-table{
+	width:450 px;
+}
+
+#modal-table-head {
+	word-wrap: break-word;
+}
+
+#modal-table-body {
+	word-wrap: break-word;
+}
+
+#feedback {
+	font-size: 1.4em;
+}
+
+#selectable .ui-selecting {
+	background: #FECA40;
+}
+
+#selectable .ui-selected {
+	background: #3e455e;
+	color: white;
+}
+
+#selectable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 450px;
+}
+
+#selectable li {
+	margin: 3px;
+	padding: 1px;
+	float: left;
+	width: 450px;
+	height: 50px;
+	text-align: center;
 }

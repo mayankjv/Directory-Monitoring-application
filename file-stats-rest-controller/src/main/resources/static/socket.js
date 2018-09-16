@@ -177,3 +177,13 @@ function showStatus(data) {
 		}, 1000);
 	}
 }
+
+$(function() {
+	$("#selectable").selectable({
+		stop : function() {
+			$(".ui-selected", this).each(function() {
+				folder = $(this).text()
+			});
+		}
+	});
+});
