@@ -252,7 +252,6 @@ public class DirectoryFile implements Serializable {
 				while (st.hasMoreTokens()) {
 					String tk = st.nextToken();
 					tokensInOneLine.add(tk.trim());
-					System.out.println(tk);
 				}
 				words += tokensInOneLine.size();
 				for (String word : tokensInOneLine) {

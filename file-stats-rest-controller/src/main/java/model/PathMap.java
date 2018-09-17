@@ -15,8 +15,8 @@ import controller.ControllerForFileStats;
 public class PathMap {
 
 	private static final char DOT = '.';
-//	private static final String UNIX_PATH_SEPARATOR = "//";
-//	private static final String PATH_SEPARATOR = "\\";
+	// private static final String UNIX_PATH_SEPARATOR = "//";
+	// private static final String PATH_SEPARATOR = "\\";
 	public final static Logger logger = Logger.getLogger(PathMap.class);
 	public String path_string;
 	public FileStatistics fileStatistics;
@@ -54,7 +54,6 @@ public class PathMap {
 	private void sendWatcherEventUpdate(String directoryName, String currentPath) {
 		this.controllerForFileStats.sendWatcherEvent(directoryHierarchy.get(extractNameFromPath(currentPath)),
 				directoryName);
-		System.out.println("Update sent");
 		logger.info("Watcher event sent to client, DirectoryName: " + directoryName + " Path: " + currentPath);
 	}
 
@@ -133,9 +132,6 @@ public class PathMap {
 	 */
 	public void updateMap(String name, String path, int typeOfEvent) {
 		try {
-			System.out.println("Update Map called in PathMap");
-			System.out.println("File Name: " + name);
-			System.out.println("path: " + path);
 			// 0 is used for event of kind Create
 			if (typeOfEvent == 0) {
 				File file = new File(path);

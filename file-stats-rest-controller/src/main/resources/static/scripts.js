@@ -386,7 +386,6 @@ function addPath() {
  */
 function resp() {
 	if (this.readyState == 4 && this.status == 200) {
-		console.log("resp");
 		if (jQuery.isEmptyObject(this.responseText)) {
 			var alert = document.getElementById("alert-failure");
 			alert.style.display = "block";
@@ -484,9 +483,7 @@ function browse() {
 function browseResponse() {
 	if (this.readyState == 4 && this.status == 200) {
 		var json = this.responseText;
-		console.log(json);
 		json = JSON.parse(json);
-		console.log(json);
 		document.getElementById("selectable").innerHTML = "";
 		for (i in json) {
 			document.getElementById("selectable").innerHTML = document
@@ -496,10 +493,6 @@ function browseResponse() {
 		}
 	}
 
-}
-
-function print() {
-	console.log($("#selectable").val());
 }
 
 /**
@@ -759,11 +752,8 @@ function getTokensForThisFile(fileName) {
 function tokenResponse() {
 	if (this.readyState == 4 && this.status == 200) {
 		var json = this.responseText;
-		console.log(json);
 		var data_ = JSON.parse(json);
-		console.log(data_)
 		data_ = JSON.parse(data_.toString());
-		console.log(data_)
 		var jsonSeries = [];
 		var jsonSerieswc = [];
 		document.getElementById("modal-table-head").innerHTML = "";
@@ -786,12 +776,11 @@ function tokenResponse() {
 					+ data[i].token
 					+ "</td><td>"
 					+ data[i].count
-					+ "</td><td>" + freq + "</td></tr>";
+					+ "</td><td>" + freq.toFixed(2) + "</td></tr>";
 		}
 		// document.getElementById("modal-table").innerHTML = document
 		// .getElementById("modal-table").innerHTML
 		// + "</tbody";
-		console.log("tbody close");
 		wordCloudConfig = {
 			type : 'wordcloud',
 			"options" : {
@@ -1040,13 +1029,11 @@ $(".dropdown-menu li a").click(
 function openFolder() {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = openResponse;
-	console.log(folder);
 	xhttp.open("GET", "/open?name=" + folder, true);
 	xhttp.send();
 }
 function openResponse() {
 	if (this.readyState == 4 && this.status == 200) {
-		console.log(this.responseText.length);
 		if ((this.responseText.length == 0)) {
 			var alert = document.getElementById("alert-failure-browse");
 			alert.style.display = "block";
@@ -1057,9 +1044,7 @@ function openResponse() {
 
 		}
 		var json = this.responseText;
-		console.log(json);
 		json = JSON.parse(json);
-		console.log(json);
 		document.getElementById("selectable").innerHTML = "";
 		for (i in json) {
 			document.getElementById("selectable").innerHTML = document

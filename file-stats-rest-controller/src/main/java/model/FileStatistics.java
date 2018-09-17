@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
 @Service
 public class FileStatistics {
 
-//	private static final String PATH_SEPARATOR = "\\";
+	// private static final String PATH_SEPARATOR = "\\";
 	public final static Logger logger = Logger.getLogger(FileStatistics.class);
 	private HashSet<String> allPaths;
 	private HashMap<String, PathMap> path;
@@ -320,8 +320,9 @@ public class FileStatistics {
 	 * 
 	 * @param name
 	 * @param path_string
-	 * @param kind        is 0 when create event, 12 when file is deleted, 11 when
-	 *                    folder is deleted and 2 when modification event
+	 * @param kind
+	 *            is 0 when create event, 12 when file is deleted, 11 when folder is
+	 *            deleted and 2 when modification event
 	 */
 	public void updateHashMap(String name, String path_string, int kind) {
 		try {

@@ -15,7 +15,7 @@ import controller.ControllerForFileStats;
 public class CreateIndex {
 
 	public final static Logger logger = Logger.getLogger(CreateIndex.class);
-//	private static final String PATH_SEPARATOR = "\\";
+	// private static final String PATH_SEPARATOR = "\\";
 	private PathMap pathMap;
 	private FileStatistics fileStatistics;
 	private ControllerForFileStats controllerForFileStats = new ControllerForFileStats();
@@ -62,7 +62,6 @@ public class CreateIndex {
 			logger.error("Exception in walkFileTree");
 		}
 		total = countFiles.totalFiles - 1;
-		System.out.println("Total : " + total);
 	}
 
 	/**
@@ -86,7 +85,7 @@ public class CreateIndex {
 			for (int i = 0; i < fList.length; i++) {
 				File file = fList[i];
 				if (file.isFile()) {
-					DirectoryFile to_be_added = new DirectoryFile(file,ControllerForFileStats.stopwords);
+					DirectoryFile to_be_added = new DirectoryFile(file, ControllerForFileStats.stopwords);
 					pathMap.files.add(to_be_added);
 					ArrayList<DirectoryFile> ret = pathMap.directoryHierarchy.get(extractNameFromPath(key));
 					ret.add(to_be_added);
@@ -100,7 +99,7 @@ public class CreateIndex {
 					sendStatus(status);
 				} else {
 
-					DirectoryFile to_be_added = new DirectoryFile(file,ControllerForFileStats.stopwords);
+					DirectoryFile to_be_added = new DirectoryFile(file, ControllerForFileStats.stopwords);
 					pathMap.files.add(to_be_added);
 					ArrayList<DirectoryFile> ret = pathMap.directoryHierarchy.get(extractNameFromPath(key));
 					ret.add(to_be_added);
@@ -134,7 +133,6 @@ public class CreateIndex {
 	 * @param status
 	 */
 	public void sendStatus(int status) {
-		System.out.println("Current: " + current);
 		this.controllerForFileStats.sendProgress(status);
 		logger.info("Status sent to client: " + status);
 	}

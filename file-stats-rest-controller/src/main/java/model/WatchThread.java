@@ -71,12 +71,10 @@ public class WatchThread extends Thread {
 					Path _directoryToWatch = Paths.get(new_path);
 					registerDirectory(_directoryToWatch);
 				} catch (IOException e) {
-					System.err.println(e);
+					logger.error("Exception in regestering directory : " + path + File.separator + file.getName());
 				}
 			}
 		}
-
-		System.out.println("New Path Registered: " + path);
 
 	}
 
@@ -108,12 +106,12 @@ public class WatchThread extends Thread {
 						Path _directoryToWatch = Paths.get(new_path);
 						registerDirectory(_directoryToWatch);
 					} catch (IOException e) {
-						System.err.println(e);
+						logger.error("Exception in registering directory : " + path + File.separator + file.getName());
 					}
 				}
 			}
 		} catch (Exception e) {
-			System.err.println(e);
+			logger.error("Exception in Watchthread, cannot get the list of files.");
 		}
 		Boolean valid = true;
 		// Infinite loop to keep the Watch Thread always powered up and running.
@@ -168,9 +166,6 @@ public class WatchThread extends Thread {
 						Path dir = (Path) watchKey.watchable();
 						String path_to_be_passed = dir.resolve((Path) event.context()).toString();
 						fileStatistics.updateHashMap(fileName, path_to_be_passed, 2);
-						System.out.println("updateHashMap called for modification event");
-						System.out.println("File Name: " + fileName);
-						System.out.println("Path: " + path_to_be_passed);
 					}
 
 				}

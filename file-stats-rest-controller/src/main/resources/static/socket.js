@@ -46,7 +46,6 @@ function connectSocket() {
 
 		// subscribing the url on which watcher response will be received
 		stompClient.subscribe('/socketresponse/watcher', function(json) {
-			console.log("response");
 			reflectChanges(JSON.parse(json.body))
 		});
 
