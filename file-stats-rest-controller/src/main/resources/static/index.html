@@ -9,7 +9,7 @@
 	ZC.LICENSE = [ "569d52cefae586f634c54f86dc99e6a9",
 			"ee6b7db5b51705a13dc2339db3edaf6d" ];
 </script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <link rel="stylesheet"
@@ -36,7 +36,7 @@
 					<button class="btn btn-secondary float-right block" type="button"
 						data-toggle="modal" data-target="#search-modal"
 						data-backdrop="static" data-keyboard="false" id="search-dropdown"
-						disabled>Search</button>
+						disabled>Search  <i class="fa fa-search" aria-hidden="true"></i></button>
 					<div class="dropdown-menu" aria-labelledby="search-btn">
 						<a class="dropdown-item" id="search-btn-name"
 							href="javascript:searchString()">Name</a> <a
@@ -50,7 +50,7 @@
 					<button class="btn btn-secondary float-right block" type="button"
 						data-toggle="modal" data-target="#modal-add-path"
 						data-backdrop="static" data-keyboard="false" id="add-path-modal">Add
-						Path</button>
+						Path  <i class="fa fa-plus" aria-hidden="true"></i></button>
 				</div>
 				<div class="col-md-2 float-right">
 					<button class="btn btn-secondary float-right block" type="button"
@@ -63,6 +63,7 @@
 	</nav>
 
 	<br>
+
 
 	<div id="wait-alert"></div>
 
@@ -116,7 +117,7 @@
 				<div class="modal-body" id="modalBody">
 
 					<button type="button" id="pie-chart-btn" class="btn btn-default"
-						onclick='javascript:showPieChart()' disabled>Pie Chart</button>
+						onclick='javascript:showPieChart()' disabled>Pie Chart <i class="fa fa-pie-chart" style="font-size:18px"></i> </button>
 
 					<button type="button" id="word-cloud-btn" class="btn btn-default"
 						onclick='javascript:showWordCloud()'>Word Cloud</button>
@@ -168,7 +169,7 @@
 					</div>
 					<div class="row container">
 						<div class="md-form col-md-8">
-							<i class="fa fa-envelope prefix grey-text"></i> <input
+							<input
 								type="text" class="form-control" id="input_path"> <label
 								data-error="wrong" data-success="right" for="defaultForm-email"></label>
 						</div>
@@ -413,9 +414,7 @@
 					<div class="col-md-12">
 						<div class="alert alert-danger" id="alert-failure-browse"
 							style="display: none"></div>
-						<button type="button" class="btn btn-secondary style = "
-							float:left;"
-						onclick='backFolder()'><-</button>
+						<i class="fa fa-arrow-circle-left" style="font-size:24px" onclick='backFolder()' ></i>
 
 						<ol id="selectable" style="overflow-y: auto; height: 300px">
 						</ol>

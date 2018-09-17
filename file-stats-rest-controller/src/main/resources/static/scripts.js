@@ -149,15 +149,15 @@ function searchResponse() {
 			document.getElementById("table-head").innerHTML = document
 					.getElementById("table-head").innerHTML
 					+ "<tr><th>"
-					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByName()'>File Name<//a>"
+					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByName()'>Name <i class=\"fa fa-sort-alpha-asc\" aria-hidden=\"true\"></i><//a>"
 					+ "</th><th>View</th><th>"
-					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByType()'>Type<//a>"
+					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByType()'>Type <i class=\"fa fa-sort-alpha-asc\" aria-hidden=\"true\"></i><//a>"
 					+ "</th><th>"
-					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableBySize()'>Size(Bytes)<//a>"
+					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableBySize()'>Size(B) <i class=\"fa fa-sort-desc\" aria-hidden=\"true\"></i><//a>"
 					+ "</th><th>"
-					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByWords()'>Word Count<//a>"
+					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByWords()'>Words <i class=\"fa fa-sort-desc\" aria-hidden=\"true\"></i><//a>"
 					+ "</th><th>"
-					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByLines()'>Line Count<//a>"
+					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByLines()'>Lines <i class=\"fa fa-sort-desc\" aria-hidden=\"true\"></i><//a>"
 					+ "</th><th>Tokens</th></tr>";
 			for ( var ij in data_) {
 				if (data_[ij]._type == "Folder") {
@@ -612,15 +612,15 @@ function xresp() {
 			document.getElementById("table-head").innerHTML = document
 					.getElementById("table-head").innerHTML
 					+ "<tr><th>"
-					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByName()'>File Name<//a>"
+					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByName()'>Name <i class=\"fa fa-sort-alpha-asc\" aria-hidden=\"true\"></i><//a>"
 					+ "</th><th>View</th><th>"
-					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByType()'>Type<//a>"
+					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByType()'>Type <i class=\"fa fa-sort-alpha-asc\" aria-hidden=\"true\"></i><//a>"
 					+ "</th><th>"
-					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableBySize()'>Size (Bytes)<//a>"
+					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableBySize()'>Size(B) <i class=\"fa fa-sort-desc\" aria-hidden=\"true\"></i><//a>"
 					+ "</th><th>"
-					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByWords()'>Word Count<//a>"
+					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByWords()'>Words <i class=\"fa fa-sort-desc\" aria-hidden=\"true\"></i><//a>"
 					+ "</th><th>"
-					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByLines()'>Line Count<//a>"
+					+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByLines()'>Lines <i class=\"fa fa-sort-desc\" aria-hidden=\"true\"></i><//a>"
 					+ "</th><th>Tokens</th></tr>";
 			for ( var ij in data_) {
 				if (data_[ij]._type == "Folder") {
@@ -841,7 +841,7 @@ function sortTableByName() {
 	while (switching) {
 		switching = false;
 		rows = table.rows;
-		for (i = 1; i < (rows.length - 1); i++) {
+		for (i = 0; i < (rows.length - 1); i++) {
 			shouldSwitch = false;
 			x = rows[i].getElementsByTagName("TD")[0];
 			y = rows[i + 1].getElementsByTagName("TD")[0];
@@ -870,7 +870,7 @@ function sortTableByType() {
 	while (switching) {
 		switching = false;
 		rows = table.rows;
-		for (i = 1; i < (rows.length - 1); i++) {
+		for (i = 0; i < (rows.length - 1); i++) {
 			shouldSwitch = false;
 			x = rows[i].getElementsByTagName("TD")[2];
 			y = rows[i + 1].getElementsByTagName("TD")[2];
@@ -899,7 +899,7 @@ function sortTableBySize() {
 	while (switching) {
 		switching = false;
 		rows = table.rows;
-		for (i = 1; i < (rows.length - 1); i++) {
+		for (i = 0; i < (rows.length - 1); i++) {
 			shouldSwitch = false;
 			x = rows[i].getElementsByTagName("TD")[3];
 			y = rows[i + 1].getElementsByTagName("TD")[3];
@@ -940,7 +940,7 @@ function sortTableByWords() {
 	while (switching) {
 		switching = false;
 		rows = table.rows;
-		for (i = 1; i < (rows.length - 1); i++) {
+		for (i = 0; i < (rows.length - 1); i++) {
 			shouldSwitch = false;
 			x = rows[i].getElementsByTagName("TD")[4];
 			y = rows[i + 1].getElementsByTagName("TD")[4];
@@ -983,7 +983,7 @@ function sortTableByLines() {
 	while (switching) {
 		switching = false;
 		rows = table.rows;
-		for (i = 1; i < (rows.length - 1); i++) {
+		for (i = 0; i < (rows.length - 1); i++) {
 			shouldSwitch = false;
 			x = rows[i].getElementsByTagName("TD")[5];
 			y = rows[i + 1].getElementsByTagName("TD")[5];

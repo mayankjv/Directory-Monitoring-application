@@ -70,15 +70,15 @@ function reflectChanges(data_) {
 		document.getElementById("table-head").innerHTML = document
 				.getElementById("table-head").innerHTML
 				+ "<tr><th>"
-				+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByName()'>File Name<//a>"
+				+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByName()'>Name<i class=\"fa fa-sort-alpha-asc\" aria-hidden=\"true\"></i><//a>"
 				+ "</th><th>View</th><th>"
-				+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByType()'>Type<//a>"
+				+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByType()'>Type <i class=\"fa fa-sort-alpha-asc\" aria-hidden=\"true\"></i><//a>"
 				+ "</th><th>"
-				+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableBySize()'>Size (Bytes)<//a>"
+				+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableBySize()'>Size(B) <i class=\"fa fa-sort-desc\" aria-hidden=\"true\"></i><//a>"
 				+ "</th><th>"
-				+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByWords()'>Word Count<//a>"
+				+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByWords()'>Words <i class=\"fa fa-sort-desc\" aria-hidden=\"true\"></i><//a>"
 				+ "</th><th>"
-				+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByLines()'>Line Count<//a>"
+				+ "<a class=\"header-anchor\" href=\"#\" onclick='sortTableByLines()'>Lines <i class=\"fa fa-sort-desc\" aria-hidden=\"true\"></i><//a>"
 				+ "</th><th>Tokens</th></tr>";
 		for ( var ij in data_) {
 
